@@ -46,14 +46,14 @@ from processing.core.ProcessingConfig import ProcessingConfig, Setting
 
 from qgis.core import QgsProcessingProvider
 from .add_quantile_attributes_algorithm import AddQuantileAttributesAlgorithm
-from .search_and_merge_algorithm import SearchAndMergeAlgorithm
-from .lock_layers_algorithm import LockLayersAlgorithm
+#from .search_and_merge_algorithm import SearchAndMergeAlgorithm
+#from .lock_layers_algorithm import LockLayersAlgorithm
 from .export_pdf_algorithm import ExportPdfAlgorithm
-from .change_layer_source_path import ChangeLayerSourcePathAlgorithm
+#from .change_layer_source_path import ChangeLayerSourcePathAlgorithm
 from .export_raster_algorithm import ExportRasterAlgorithm
 from .add_delay_algorythm import AddDelayAlgorithm
-from .delete_raster_from_gpkg import DeleteRasterFromGeopackageAlgorithm
-#from .ntk_geocoder_algorithm import NtkGeocoderAlgorithm
+#from .delete_raster_from_gpkg import DeleteRasterFromGeopackageAlgorithm
+
 
 
 
@@ -78,58 +78,33 @@ class LociToolsProvider(QgsProcessingProvider):
         Loads all algorithms belonging to this provider.
         """
         self.addAlgorithm(AddQuantileAttributesAlgorithm())
-        self.addAlgorithm(SearchAndMergeAlgorithm())
-        self.addAlgorithm(LockLayersAlgorithm())
+        #self.addAlgorithm(SearchAndMergeAlgorithm())
+        #self.addAlgorithm(LockLayersAlgorithm())
         self.addAlgorithm(ExportPdfAlgorithm())
-        self.addAlgorithm(ChangeLayerSourcePathAlgorithm())
+        #self.addAlgorithm(ChangeLayerSourcePathAlgorithm())
         self.addAlgorithm(ExportRasterAlgorithm())
         self.addAlgorithm(AddDelayAlgorithm())
-        self.addAlgorithm(DeleteRasterFromGeopackageAlgorithm())
+        #self.addAlgorithm(DeleteRasterFromGeopackageAlgorithm())
 
         #self.addAlgorithm(NtkGeocoderAlgorithm())
 
-        #load models
-        #filename = "C:\\Users\\dlgal\\AppData\\Roaming\\QGIS\\QGIS3\\profiles\\default\\processing\\models\\variable_test.model3"
-
+        ''' load all graphical models (*.model3) in plug-in dir '''
         for dirpath, dirnames, files in os.walk(os.path.dirname(__file__)):
             for file_name in files:
                 if file_name.lower().endswith('.model3'):
                     alg = QgsProcessingModelAlgorithm()
                     alg.fromFile(os.path.join(dirpath, file_name))
-                    alg.setGroup('Data Tools')
+                    alg.setGroup('Models')
                     self.addAlgorithm(alg)
 
-        
-
     def id(self):
-        """
-        Returns the unique provider id, used for identifying the provider. This
-        string should be a unique, short, character only string, eg "qgis" or
-        "gdal". This string should not be localised.
-        """
         return 'loci'
 
     def name(self):
-        """
-        Returns the provider name, which is used to describe the provider
-        within the GUI.
-
-        This string should be short (e.g. "Lastools") and localised.
-        """
         return self.tr('LociTools')
 
     def icon(self):
-        """
-        Should return a QIcon which is used for your provider inside
-        the Processing toolbox.
-        """
         return QgsProcessingProvider.icon(self)
 
     def longName(self):
-        """
-        Returns the a longer version of the provider name, which can include
-        extra details such as version numbers. E.g. "Lastools LIDAR tools
-        (version 2.2.1)". This string should be localised. The default
-        implementation returns the same string as name().
-        """
         return self.name()
