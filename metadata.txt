@@ -4,7 +4,7 @@
 
 [general]
 name=Loci Tools
-qgisMinimumVersion=3.10
+qgisMinimumVersion=3.16
 description=Various tools created by LociGeo.
 version=0.1
 author=LociGeo
